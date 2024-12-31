@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess the Number Game</title>
+
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #525252;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .container {
+            text-align: center;
+            background-color: rgb(32, 32, 32);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            color: #fff;
+        }
+
+        input {
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            background-color: #61dafb;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #21a1f1;
+        }
+
+        #resultMessage {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        #restartGame {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Guess the Number Game</h1>
+        <p>Guess a number between 1 and 100:</p>
+        <input type="number" id="guessInput" placeholder="Enter your guess" />
+        <button id="submitGuess">Submit Guess</button>
+        <div id="resultMessage">
+            <p>Previous Guess: <span id="previous-guess"></span> </p>
+            <p>Guess Remaining: <span id="remaining-guess">10</span> </p>
+            <p id="loOrhigh"></p>
+        </div>
+        <button id="restartGame">Restart Game</button>
+    </div>
+
+
+    <script>
+
+        let guessinput = document.getElementById("guessInput");
+        const submitBtn = document.getElementById('submitGuess');
+        const previousGuess = document.getElementById('previous-guess');
+        const remainingGuess = document.getElementById('remaining-guess');
+        const loOrhigh = document.getElementById('loOrhigh');
+        const restartGame = document.getElementById('restartGame');
+
+        let preGuess = [];
+        let remaining = 2; // Corrected to use the correct variable name here
+        let playGame = true;
+        let randomNumber = parseInt(Math.random() * 100 + 1); // Global random number
+        console.log(randomNumber);
+
+        submitBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            let guess = parseInt(guessinput.value);
+            console.log(guess);
+            validation(guess);
+        });
+
+        function validation(guess) {
+            if (isNaN(guess)) {
+                alert('Enter a valid Number');
+            } else if (guess < 1 || guess > 100) {
+                alert('Enter Number between 1 to 100');
+            } else {
+                preGuess.push(guess);
+                checkCondition(guess);
+                display(guess);
+            }
+        }
+
+        function checkCondition(guess) {
+            // End the game if guesses exceed 10 or if remaining guesses reach 0
+            if (remaining <= 0) {
+                displayMsg("Game Over! You've run out of guesses.");
+                endGame();
+                return; // Stop further checks
+            }
+
+            if (guess === randomNumber) {
+                displayMsg(`You guessed the right number: ${guess}`);
+                endGame();
+            } else if (guess < randomNumber) {
+                displayMsg(`You guessed a smaller number`);
+            } else if (guess > randomNumber) {
+                displayMsg(`You guessed a larger number`);
+            }
+        }
+
+        function display(guess) {
+            guessinput.value = "";
+            previousGuess.innerHTML = `${preGuess.join(', ')}`; // Display guesses as comma-separated
+            remaining--; // Decrease remaining guesses
+            remainingGuess.innerHTML = `${remaining}`; // Update remaining guesses in the display
+        }
+
+        function displayMsg(msg) {
+            loOrhigh.innerHTML = msg;
+        }
+
+        // End the game logic
+        function endGame() {
+            playGame = false; // Stop the game
+            submitBtn.disabled = true; // Disable the submit button
+            restartGame.style.display = "block"; // Show the restart button
+        }
+
+        // Restart the game
+        restartGame.addEventListener("click", function () {
+            // Reset the game
+            guessinput.value = "";
+            preGuess = [];
+            remaining = 2; // Reset remaining guesses
+            randomNumber = parseInt(Math.random() * 100 + 1); // Generate a new random number
+            console.log("New random number: ", randomNumber);
+
+            // Reset the UI elements
+            loOrhigh.innerHTML = "";
+            previousGuess.innerHTML = `${preGuess.join(', ')}`;
+            remainingGuess.innerHTML = `${remaining}`;
+
+            // Enable the submit button and hide the restart button
+            submitBtn.disabled = false;
+            restartGame.style.display = "none";
+
+            // Restart the game
+            playGame = true;
+        });
+
+    </script>
+</body>
+
+</html>

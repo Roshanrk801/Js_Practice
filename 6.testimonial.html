@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Testimonial Slider hk</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            height: 100vh;
+            align-items: center;
+            font-family: cursive;
+        }
+
+        .testimonial-container {
+            width: 500px;
+            height: 100px;
+            background-color: slateblue;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            min-width: 400px;
+            padding: 70px 20px;
+            margin: 5px;
+            color: white;
+            position: relative;
+        }
+
+        img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            top: -50px;
+        }
+
+        .username {
+            font-size: 13px;
+            font-weight: 100;
+        }
+
+        .prevBtn,
+        .nextBtn {
+            border-radius: 5px;
+            border: none;
+            padding: 5px 10px;
+            background-color: #9f9fb3;
+            margin-left: 10px;
+        }
+
+        .prevBtn:hover,
+        .nextBtn:hover {
+
+            background-color: #7e7e99;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="testimonial-container">
+        <img src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=880&q=80"
+            alt="user-image" />
+        <p class="text">
+            This is simply unbelievable! I would be lost without Apple. The very
+            best. Not able to tell you how happy I am with Apple.
+        </p>
+        <h4 class="username">Cherise G</h4>
+    </div>
+    <script>
+
+const testimonials = [
+    {
+        name: "Cherise G",
+        photoUrl:
+            "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=880&q=80",
+        text: "This is simply unbelievable! I would be lost without Apple. The very best. Not able to tell you how happy I am with Apple.",
+    },
+    {
+        name: "Rosetta Q",
+        photoUrl: "https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=880&q=80",
+        text: "I would also like to say thank you to all your staff. Wow what great service, I love it! Apple impressed me on multiple levels.",
+    },
+    {
+        name: "Constantine V",
+        photoUrl: "https://images.unsplash.com/photo-1628157588553-5eeea00af15c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=880&q=80",
+        text: "Thank you for making it painless, pleasant and most of all hassle free! I wish I would have thought of it first. The very best.",
+    },
+];
+
+const images = document.querySelector('img');
+const textEl = document.querySelector('.text');
+const username = document.querySelector('.username');
+const testimonialContainer = document.querySelector('.testimonial-container');
+
+let idx = 0;
+let timeoutId;
+
+function updateTestimonial() {
+    const { name, photoUrl, text } = testimonials[idx];
+    images.src = photoUrl;
+    textEl.innerHTML = text;
+    username.innerHTML = name;
+    idx++;
+    if (idx === testimonials.length) {
+        idx = 0;
+    }
+    timeoutId = setTimeout(updateTestimonial, 10000);
+}
+
+function resetTimeout() {
+    clearTimeout(timeoutId);
+    updateTestimonial();
+}
+
+const prevBtn = document.createElement("button");
+prevBtn.className = "prevBtn";
+prevBtn.innerText = "Previous";
+testimonialContainer.append(prevBtn);
+
+const nextBtn = document.createElement("button");
+nextBtn.className = "nextBtn";
+nextBtn.innerText = "Next";
+testimonialContainer.append(nextBtn);
+
+nextBtn.addEventListener('click', () => {
+    idx++;
+    if (idx === testimonials.length) {
+        idx = 0;
+    }
+    resetTimeout();
+    console.log('Next button clicked, idx:', idx);
+});
+
+prevBtn.addEventListener('click', () => {
+    idx--;
+    if (idx < 0) {
+        idx = testimonials.length - 1;
+    }
+    resetTimeout();
+    console.log('Previous button clicked, idx:', idx);
+});
+
+updateTestimonial();
+
+    </script>
+</body>
+
+</html>
