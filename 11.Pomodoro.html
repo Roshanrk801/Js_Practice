@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pomodoro Timer hk</title>
+    <style>
+        .container {
+            margin: 0 auto;
+            max-width: 400px;
+            text-align: center;
+            padding: 20px;
+            font-family: "Roboto", sans-serif;
+        }
+
+        .title {
+            font-size: 36px;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+
+        .timer {
+            font-size: 72px;
+            color: #2c3e50;
+        }
+
+        button {
+            font-size: 18px;
+            padding: 10px 20px;
+            margin: 10px;
+            color: white;
+
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        button:hover {
+            opacity: 0.7;
+        }
+
+        #start {
+            background-color: #27ae60;
+        }
+
+        #stop {
+            background-color: #c0392b;
+        }
+
+        #reset {
+            background-color: #7f8c8d;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="title">Pomodoro Timer</h1>
+        <p class="timer" id="timer">25:00</p>
+        <div class="button-wrapper">
+            <button id="start">Start</button>
+            <button id="stop">Stop</button>
+            <button id="reset">Reset</button>
+        </div>
+    </div>
+    <script>
+        const timerPara = document.getElementById('timer');
+        const startbtn = document.getElementById('start');
+        const stopbtn = document.getElementById('stop');
+        const resetbtn = document.getElementById('reset');
+
+        let minutes = 25;
+        let second = 0;
+        let timerId;
+
+        startbtn.addEventListener("click", () => {
+            if (timerId) {
+                clearInterval(timerId);
+            }
+
+            timerId = setInterval(() => {
+                if (second === 0) {
+                    second = 59;
+                    if (minutes !== 0) {
+                        minutes--;
+                    }
+                } else {
+                    second--;
+                }
+                timerPara.innerHTML = `${minutes}:${second < 10 ? '0' : ''}${second}`;
+                console.log(timerId)
+            }, 1000);
+        });
+
+        stopbtn.addEventListener("click", () => {
+            clearInterval(timerId);
+        });
+
+        resetbtn.addEventListener("click", () => {
+            clearInterval(timerId);
+            minutes = 25;
+            second = 0;
+            timerPara.innerHTML = `${minutes}:00`;
+        });
+    </script>
+</body>
+
+</html>
+</body>
+
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Video Trailer Popup</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+        integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+<style>
+
+body {
+    margin: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+    align-items: center;
+    background-color: black;
+}
+
+.main-container {
+    max-width: 550px;
+    padding: 10px;
+}
+
+.main-container img {
+    max-width: 100%;
+    margin-bottom: 15px;
+    border-radius: 10px;
+}
+
+.main-container h1 {
+    color: white;
+    font-weight: 500;
+}
+
+.main-container p {
+    color: white;
+    margin: 15px 0;
+}
+
+.btn {
+    background-color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.btn:hover {
+    background-color: orange;
+}
+
+.trailer-container {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 1;
+    transition: opacity .75s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    background: black;
+    width: 100%;
+}
+
+.active.trailer-container {
+    visibility: hidden;
+    opacity: 0;
+  }
+  
+.trailer-container video {
+    position: relative;
+    max-width: 900px;
+    outline: none;
+  }
+
+@media (max-width: 991px) {
+    .trailer-container video {
+        max-width: 90%;
+    }
+}
+
+.close-icon {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    color: white;
+    cursor: pointer;
+}
+</style>    </head>
+
+<body>
+    <div class="main-container">
+        <img src="https://images.pexels.com/photos/3062545/pexels-photo-3062545.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+            alt="movie-image" />
+        <h1>Movie Title</h1>
+        <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum iste
+            necessitatibus porro explicabo illo dolorum dolores cupiditate non modi
+            quasi nobis, earum ab, autem esse vero sapiente minus vel! Provident?
+        </p>
+        <button class="btn">Watch now</button>
+    </div>
+    <div class="trailer-container active">
+        <video src="./14.videopop.mp4" controls="true"></video>
+        <i class="fas fa-times fa-2x close-icon"></i>
+    </div>
+<script>
+
+const watchBtn = document.querySelector(".btn");
+const trailerContainer = document.querySelector(".trailer-container");
+const closeBtn = document.querySelector(".close-icon");
+const video = document.querySelector("video");
+
+watchBtn.addEventListener("click", () => {
+    trailerContainer.classList.remove("active")
+});
+
+closeBtn.addEventListener("click", () => {
+    trailerContainer.classList.add("active")
+    video.pause();
+    video.currentTime = 0;
+});
+
+</script></body>
+
+</html>
